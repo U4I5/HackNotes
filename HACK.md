@@ -199,6 +199,7 @@ cewl -w wordslist.txt -d 10 http://$IP
 
 - hash-identifier
 - hashid
+- [hashcat modes](https://github.com/U4I5/HackNotes/blob/main/hashcat.examples.txt)
 
 ## PrivEsc
 
