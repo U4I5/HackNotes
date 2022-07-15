@@ -79,6 +79,7 @@ snmpcheck -t $IP -c public
 
 ```sh
 nikto -h http://$IP/
+nikto -h example.com -id username:password
 gobuster dir -e -u http://$IP -w /usr/share/seclists/Discovery/Web-Content/common.txt
 gobuster dir -e -u http://$IP -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x ext,ext2,ext3
 wfuzz --hc 404 -c -w /usr/share/seclists/Discovery/Web-Content/common.txt http://$IP/FUZZ.txt
