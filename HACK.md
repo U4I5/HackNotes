@@ -199,7 +199,6 @@ cewl -w wordslist.txt -d 10 http://$IP
 
 - hash-identifier
 - hashid
-- [hashcat modes](https://github.com/U4I5/HackNotes/blob/main/hashcat.examples.txt)
 
 ## PrivEsc
 
@@ -296,8 +295,9 @@ john --wordlist=wordlist.txt forjohn
 ```
 
 ### Hashcat
-
+- [hashcat modes](https://github.com/U4I5/HackNotes/blob/main/hashcat.examples.txt) 
 - MD5 Wordlist
+
 
 ```sh
 hashcat -a 0 -m 0 "42f749ade7f9e195bf475f37a44cafcb" /usr/share/wordlists/rockyou.txt
