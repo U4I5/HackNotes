@@ -14,13 +14,11 @@ if os.geteuid() != 0:
     print("Launch it with sudo")
     exit()
 
-# List of openvpn files
 # Use your own files path here
-vpnlist = {
-    "TryHackMe": "/home/kali/ctf/tryhackme/tryhackme.ovpn",
-    "HackTheBox": "/home/kali/ctf/hackthebox/hackthebox.ovpn",
-    "ProvingGrounds": "/home/kali/ctf/pg/pg.ovpn"
-}
+ovpn_files_folder = "/home/kali/ctf/ovpn_files"
+
+# Dictionary of openvpn files
+vpnlist = {file.split(".")[0]:f"{ovpn_files_folder}/{file}" for file in sorted(os.listdir(ovpn_files_folder)) if file.endswith(".ovpn")}
 
 # Display menu
 main_menu_title = "Select an openvpn file:"
